@@ -65,20 +65,38 @@
 <script type="module">
     import { store } from './services/market/src/this/index.mjs'
 
-    const auth = store.get('authorization')
-    const init = async (auth) => {
-        window.localStorage.setItem('authorization', JSON.stringify({
-            expires_in: auth.expires_in,
-            token_type: auth.token_type,
-            cid: auth.cid,
-            token: {
-                access: auth.access_token
+    let auth = store.get('authorization')
+    const init = async (auth, isAuth = false) => {
+        if(!isAuth) {
+            store.set('authorization', {
+                expires_in: auth.expires_in,
+                token_type: auth.token_type,
+                cid: auth.cid,
+                token: {
+                    access: auth.access_token
+                }
+            })
+
+            auth = {
+                expires_in: auth.expires_in,
+                token_type: auth.token_type,
+                cid: auth.cid,
+                token: {
+                    access: auth.access_token
+                }
             }
-        }))
+        }
+
 
         const api = await import('./services/market/src/api/index.mjs')
-        console.log('api', api)
-        debugger
+        const campaignsApi = new api.CampaignsApi();
+        campaignsApi.apiClient.authentications['OAuth'].accessToken = auth;
+
+        campaignsApi.getCampaigns(undefined, function (error, data) {
+            console.log('---------------------------------', JSON.stringify(data, null, 4));
+        });
+        // console.log('api', api)
+        // debugger
         await import('./index.mjs')
     }
 
@@ -93,10 +111,10 @@
             {view: "default"}
         )
         .then(({handler}) => handler())
-        .then(data => init(data))
+        .then(data => init(data, false))
         .catch(error => console.log('Обработка ошибки', error))
     } else {
-        init(auth)
+        init(auth, true)
     }
 </script>
 </body>
