@@ -5,11 +5,10 @@ import cors from 'cors';
 import Enqueue from 'express-enqueue';
 import compression from 'compression';
 import proxy from 'express-http-proxy';
-import * as dotenv from 'dotenv';
-import JiraApi from 'jira-client';
 import express from 'express';
+import { env } from './env.node.mjs'
 let __dirname = process.cwd();
-dotenv.config();
+
 export const modules = async (app) => {
     let whitelist = []
 
@@ -18,9 +17,8 @@ export const modules = async (app) => {
         port: 587,
         secure: false,
         auth: {
-            // TODO: replace `user` and `pass` values from <https://forwardemail.net>
-            user: 'techmailhr',
-            pass: '%hbHhsxk3e8auM7y'
+            user: 'xxxx',
+            pass: 'xxxxx'
         }
     });
 
@@ -63,15 +61,6 @@ export const modules = async (app) => {
         strictSSL: true
     });
 
-    // const jira = new JiraApi({
-    //     protocol: process.env.JIRA_protocol,
-    //     host: process.env.JIRA_host,
-    //     username: process.env.JIRA_username,
-    //     password: process.env.JIRA_password,
-    //     apiVersion: process.env.JIRA_apiVersion,
-    //     strictSSL: process.env.JIRA_strictSSL
-    // });
-
     const queue = new Enqueue({
         concurrentWorkers: 4,
         maxSize: 200,
@@ -87,12 +76,6 @@ export const modules = async (app) => {
         console.log(`node: 'icd-11': ${req.method}: ${req.path}`);
         next();
     });
-
-    // app.set('view cache', false);
-    // app.use((req, res, next) => {
-        // res.set('Cache-Control', 'no-store')
-        // next()
-    // })
 
     app.get(`/welcomebook`, (req, res, next) => {
         next();
@@ -131,14 +114,6 @@ export const modules = async (app) => {
 
     app.post(`/smtp_client`, async (req, res) => {
         try {
-            // console.log('@@@@@@@@@@@@@@@@@@2', req.body)
-            console.log('SEND EMAIL', {
-                from: '"Welcome Book feedback" <welcomebook@digitalms.ru>',
-                to: 'hr@digitalms.ru',
-                subject: 'Welcome Book feedback',
-                html: `<b>${req.body.mail.message}</b>`
-            });
-
             const info = await transporter.sendMail({
                 from: '"Welcome Book feedback" <welcomebook@digitalms.ru>',
                 to: 'zababurins@vk.com',
@@ -159,14 +134,6 @@ export const modules = async (app) => {
         }
     });
 
-    // app.use(proxy('localhost:8080', {
-    //     limit: '5mb',
-    //     filter: function (req) {
-    //         const data = ['/code/'].some(path => req.path.includes(path));
-    //         return data;
-    //     }
-    // }));
-
     app.use('/checklist', express.static(`${__dirname}/services/checklist/src`));
     app.use('/json-ld', express.static(`${__dirname}/services/json-ld`));
     app.use('/rules', express.static(`${__dirname}/services/rules/src`));
@@ -185,8 +152,8 @@ export const modules = async (app) => {
             res.set('Cross-Origin-Opener-Policy', 'same-origin');
         }
     }));
+
     app.use('/database', express.static(`${__dirname}/services/database/build`));
-    // app.use('/terminal', express.static(`${__dirname}/services/terminal/src`));
     app.use('/docs', express.static(`${__dirname}/services/docs/docs`));
 
     app.use('/template', express.static(`${__dirname}/template`));
@@ -194,26 +161,6 @@ export const modules = async (app) => {
     app.use('/services', express.static(`${__dirname}/services`));
 
     app.use('/modules', express.static(`${__dirname}/services/database/build/modules`));
-
-    // app.get(`/welcomebook/*`, async (req, res) => {
-    //     res.status(200).sendFile(path.join(__dirname, '/services/welcomebook/examples/v2.29.2.html'));
-    // })
-    // app.use(express.static(`${__dirname}/services/welcomebook/src`));
-
-    app.post(`/mail`, async (req, res) => {
-        console.log('index ----- index', req.body.mail.message);
-        const info = await transporter.sendMail({
-            from: '"Welcome Book feedback"',
-            to: 'hr@digitalms.ru',
-            subject: 'Welcome Book feedback',
-            html: `<b>${req.body.mail.message}</b>`
-        });
-
-        res.status(200).send({
-            status: true,
-            message: info
-        });
-    });
 
     app.get(`/env.json`, async (req, res) => {
         res.status(200).sendFile(path.join(__dirname, 'env.json'))
@@ -224,8 +171,6 @@ export const modules = async (app) => {
     })
 
     const dapp = env().DAPP
-
-    // console.log('DAPP: ', dapp)
 
     app.use(proxy('https://metamart-dev.helpms.ru', {
         limit: '5mb',
