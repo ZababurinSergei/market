@@ -93,16 +93,16 @@
     if (!auth) {
         window.YaAuthSuggest.init(
             {
-                client_id: "88d4aef967d14177922e081aead43590",
+                client_id: "347343cdf74e44c29091afca4b4d0593",
                 response_type: "token",
-                redirect_uri: "https://zababurinsergei.github.io/market/oauth2-yandex-redirect.html"
+                redirect_uri: "https://market-iewb.onrender.com"
             },
-            "https://zababurinsergei.github.io",
-            {view: "default"}
+            "https://market-iewb.onrender.com",
+            { view: "default" }
         )
-        .then(({handler}) => handler())
-        .then(data => init(data, false))
-        .catch(error => console.log('Обработка ошибки', error))
+            .then(({handler}) => handler())
+            .then(data => init(data, false))
+            .catch(error => console.log('Обработка ошибки', error))
     } else {
         init(auth, true)
     }
