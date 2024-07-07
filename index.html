@@ -67,7 +67,6 @@
 
     const suth = store.get('authorization')
     const init = async (auth) => {
-        debugger
         window.localStorage.setItem('authorization', JSON.stringify({
             expires_in: auth.expires_in,
             token_type: auth.token_type,
