@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+    <meta name="description"
+          content="Автоматизации технологических процессов сборки, настройки и развёртывания программного обеспечения.">
+    <meta property="og:description"
+          content="Автоматизации технологических процессов сборки, настройки и развёртывания программного обеспечения."/>
+    <meta property="og:site_name" content="DevOps"/>
+    <meta property="og:title" content="DevOps"/>
+    <meta property="og:locale" content="ru_RU"/>
+    <meta property="og:type" content="contract"/>
+    <meta property="og:url" content="https://zababurinsergei.github.io/DevOps/"/>
+    <meta property="og:image" content="https://i.imgur.com/pSrPUkJ.jpg"/>
+    <meta property="og:image:width" content="537"/>
+    <meta property="og:image:height" content="240"/>
+    <link rel="manifest" href="./manifest.json" crossorigin="use-credentials">
+    <link href="./services/webgpu/src/this/css/index.light.css" rel="stylesheet"/>
+    <script src="./services/webgpu/src/component/nk-memory/this/mjs/terminal/modules/xterm/lib/xterm.js"></script>
+    <script src="./services/webgpu/src/component/nk-memory/this/mjs/terminal/modules/local-echo/dist/local-echo.js"></script>
+    <script src="./services/webgpu/src/component/nk-memory/this/mjs/terminal/modules/xterm-addon-fit/lib/xterm-addon-fit.js"></script>
+    <script src="./services/webgpu/src/component/nk-memory/this/mjs/terminal/modules/xterm-addon-web-links/lib/xterm-addon-web-links.js"></script>
+    <title>DevOps</title>
+    <link rel="shortcut icon"
+          href="data:image/png;base64, AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbbv+DGW3/mRlt/5kZbf+ZGq6/hIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGa3/ohkt/7/Zbj//2S3/v9lt/6WAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGm5/iRlt/74Zbj//2W4//9luP//Zbf++mi4/i4gIPciGhr24hsb9uwbG/bsGhr24CEh9xoAAAAAAAAAAAAAAABnuP5mZLf+/2W4//9luP//Zbj//2S3/v9muP5yGBj2rhMT9v8TE/b/ExP2/xMT9f8YGPWkAAAAAAAAAAAAAAAAb7z/BGW3/tZluP//Zbj//2W4//9lt/7gJzH3ShMT9f8TE/b/ExP2/xMT9v8TE/b/ExP1/CAg9joAAAAAAAAAAAAAAABmuP5GZLf+6GS3/uhkt/7oZbf+UhgY9YQSEvX/ExP2/xMT9v8TE/b/ExP2/xIS9f8aGvZ8AAAAAD4++gQgIPZ6IiL2hiIi9oYgIPZ8KCj5BAAAAAAtLfgUFBT17BMT9v8TE/b/ExP2/xMT9v8VFfXoLCz4DgAAAAAaGvZqEhL1/xMT9v8TE/b/EhL1/xsb9nIAAAAAAAAAABwc9m4SEvX/ExP2/xMT9v8SEvX/HR32ZAAAAAAnJ/gSFRX16hMT9v8TE/b/ExP2/xMT9v8UFPXuJyf4Fp2xlAKNnqUYLC/mfhYW83ATE/VuFxf1aDc3+gIAAAAAGBj1fhIS9f8TE/b/ExP2/xMT9v8TE/b/ExP1/xkZ9YaGn3yIhZ57/4Wee/+Gn3yKAAAAAAAAAAAAAAAAAAAAACMj9zYTE/X8ExP2/xMT9v8TE/b/ExP2/xMT9f9JUshihZ57+IaffP+Gn3z/hZ579oigfiYAAAAAAAAAAAAAAAAAAAAAGBj1oBIS9f8TE/b/ExP2/xMT9f8YGPWmiKB+PIWee/+Gn3z/hp98/4Wee/+HoH06AAAAAAAAAAAAAAAAAAAAACUl9xgVFfXOExP11BMT9dQUFPXQJib3HgAAAACGn3ymhp98/4affP+Gn3ymAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiKB+EIihf0CIoX9AiKB+EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP//AADg/wAA4MMAAOCBAADggQAA8QEAAOeBAADDwwAAgf8AAIAPAACBDwAAgQ8AAMMPAAD//wAA//8AAA=="
+          type="image/png">
+
+    <script type="module">
+        window.localStorage.setItem('location', JSON.stringify({
+            pathname: './services/webgpu/src'
+        }));
+
+        const index = await import('./index.mjs');
+    </script>
+
+    <style>
+        @import "./codicon.css";
+        @import url('./services/webgpu/src/component/nk-ide/this/mjs/api/this/index.css');
+
+        @font-face {
+            font-family: 'Raleway-Regular';
+            src: url('./services/webgpu/src/this/fonts/Raleway-Regular.ttf') format('truetype');
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            width: 100%;
+            overflow-y: scroll;
+            overflow-x: auto;
+        }
+
+        #gfx {
+            width: 100%;
+            display: none;
+        }
+
+        #content {
+            width: 100%;
+            display: none;
+        }
+
+        #error {
+            text-align: center;
+            width: 100%;
+            color: red;
+            display: none;
+        }
+
+        .visibleInput {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+<nk-memory>
+    <template>
+        <header>
+			<pre class="__peer-header_logo_value">
+						░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+						░░░░░░░░░░░░░░░░░░█░░░░░░░░░░░░░░░░░░░░░░░░░░░
+						░░░░░░████░░░░░░█████░░░░░░░░░░░░░░░░░░░░░░░░░
+						░░░░████████░░░███████░░░░░░░░░░░░░░░░░░░░░░░░
+						░░░██████████░█████████░░░░░░░░░░░░░░░░░░░░░░░
+						░░████████████░░█████░░░░░░░░░░░░░░░░░░░░░░░░░
+						░░░██████████░░░░░█░░░░░░░░░░░░░░░░░░░░░░░░░░░
+						░░░░████████░░░░░░█████╗░██████╗░░██████╗░░░░░
+						░░░░░░░░█████░░░░██╔══██╗██╔══██╗██╔════╝░░░░░
+						░░░░░░█████████░░██║░░██║██████╔╝██║░░██╗░░░░░
+						░░░░░███████████░██║░░██║██╔══██╗██║░░╚██╗░░░░
+						░░░░░░█████████░░╚█████╔╝██║░░██║╚██████╔╝░░░░
+						░░░░░░░███████░░░░╚════╝░╚═╝░░╚═╝░╚═════╝░░░░░
+						░░░░░░░░░███░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+						░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</pre>
+        </header>
+        <div class="container">
+            <div class="nk-shared-protocol">
+                <slot name="nk-shared-protocol"></slot>
+            </div>
+            <div class="nk-peer">
+                <slot name="nk-peer"></slot>
+            </div>
+            <div class="wrapper">
+                <h2>Scheduler</h2>
+                <div class="settings">
+                    <div class="item hardwareConcurrency"><span class="key">Колличество логических процессоров для воркеров:</span><span
+                            class="value"></span></div>
+                </div>
+                <div class="memory-queue"></div>
+            </div>
+            <div class="nk-git">
+                <h2>DevOps</h2>
+                <slot name="nk-git"></slot>
+            </div>
+        </div>
+    </template>
+</nk-memory>
+<script type="module">
+    let timerId = null
+    let perf = {}
+    perf.exception = {}
+    globalThis.log = 0;
+
+    const setPost = (url, data) => {
+        return new Promise((resolve, reject) => {
+            fetch(url, {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', // include, *same-origin, omit
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                    'X-CSRF-TOKEN': getCookie(),
+                    'X-XSRF-TOKEN': getCookie(),
+                },
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: JSON.stringify(data), // body data type must match "Content-Type" header
+            }).then(async function(response) {
+                if (response.status === 400) {
+                    throw new FetchException(await response.json());
+                } else {
+                    resolve(response.json());
+                }
+            }).catch(function(e) {
+                reject(e);
+            });
+        });
+    };
+
+    // // Helper to log a single entry.
+    function logEntry(entry) {
+        const objDict = {
+            "type": entry.entryType,
+            "name": entry.name,
+            "start": entry.startTime,
+            "duration": entry.duration,
+        };
+
+        if(entry.entryType === 'navigation') {
+            perf.performance = [{
+                name: entry.name,
+                pathname: (new URL(entry.name)).pathname,
+                start: objDict.start,
+                current: objDict.start,
+                duration: entry.duration,
+                delta: entry.duration,
+                end: 0,
+                isSending: false
+            },{ }]
+        }
+
+        if(entry.entryType === 'resource') {
+            if(window.location.pathname === perf.performance[0].pathname && !perf.performance[0].isSending) {
+                perf.performance[0].delta = objDict.start - perf.performance[0].current
+                perf.performance[0].current = objDict.start
+                perf.performance[0].duration = perf.performance[0].duration + perf.performance[0].delta
+                perf.performance[0].end = objDict.duration
+
+                if(!perf.performance[1].name) {
+                    perf.performance[1].name = objDict.name
+                    perf.performance[1].duration = objDict.duration
+                }
+
+                clearTimeout(timerId)
+
+                timerId = setTimeout(() => {
+                    clearTimeout(timerId)
+                    perf.performance[0].duration = perf.performance[0].duration + perf.performance[0].end
+                    console.log('Performance: ', perf.performance[0])
+                    for(let item of perf.performance) {
+
+                        // post('/api/v1/metric', {
+                        //     "uiResponse" : {
+                        //         "deltaTime": item.duration,
+                        //         "path": (new URL(item.name)).pathname
+                        //     }
+                        // })
+                    }
+
+                    perf.performance[0].isSending = true
+                }, 5000);
+            }
+        }
+    }
+
+    // // Call to log all previous and future User Timing entries.
+    function logUserTiming() {
+        if (!PerformanceObserver.supportedEntryTypes.includes("element")) {
+            console.log("element are not observable");
+        } else {
+            perf.observer.observe({type: "element", buffered: true});
+        }
+
+        if (!PerformanceObserver.supportedEntryTypes.includes("event")) {
+            console.log("event are not observable");
+        } else {
+            perf.observer.observe({type: "event", buffered: true});
+        }
+
+        if (!PerformanceObserver.supportedEntryTypes.includes("first-input")) {
+            console.log("first-input are not observable");
+        } else {
+            perf.observer.observe({type: "first-input", buffered: true});
+        }
+
+        if (!PerformanceObserver.supportedEntryTypes.includes("navigation")) {
+            console.log("navigation are not observable");
+        } else {
+            perf.observer.observe({type: "navigation", buffered: true});
+        }
+        //
+        if (!PerformanceObserver.supportedEntryTypes.includes("resource")) {
+            console.log("resource are not observable");
+        } else {
+            perf.observer.observe({type: "resource", buffered: true});
+        }
+
+        if (!PerformanceObserver.supportedEntryTypes.includes("visibility-state")) {
+            console.log("visibility-state are not observable");
+        } else {
+            perf.observer.observe({type: "visibility-state", buffered: true});
+        }
+
+        if (!PerformanceObserver.supportedEntryTypes.includes("layout-shift")) {
+            console.log("layout-shift are not observable");
+        } else {
+            perf.observer.observe({type: "layout-shift", buffered: true});
+        }
+
+        if (!PerformanceObserver.supportedEntryTypes.includes("longtask")) {
+            console.log("longtask are not observable");
+        } else {
+            perf.observer.observe({type: "longtask", buffered: true});
+        }
+
+        if (!PerformanceObserver.supportedEntryTypes.includes("largest-contentful-paint")) {
+            console.log("largest-contentful-paint are not observable");
+        } else {
+            perf.observer.observe({type: "largest-contentful-paint", buffered: true});
+        }
+
+        if (!PerformanceObserver.supportedEntryTypes.includes("mark")) {
+            console.log("Marks are not observable");
+        } else {
+            perf.observer.observe({type: "mark", buffered: true});
+        }
+        if (!PerformanceObserver.supportedEntryTypes.includes("measure")) {
+            console.log("Measures are not observable");
+        } else {
+            perf.observer.observe({type: "measure", buffered: true});
+        }
+    }
+
+    // Call to stop logging entries.
+    function stopLoggingUserTiming() {
+        perf.observer.disconnect();
+    }
+
+    // Call to force logging queued entries immediately.
+    function flushLog() {
+        perf.observer.takeRecords().forEach(entry => {
+            logEntry(entry);
+        });
+    }
+
+
+    perf.observer = new PerformanceObserver(list => {
+        list.getEntries().forEach(entry => {
+            logEntry(entry);
+        });
+    });
+
+    logUserTiming()
+
+
+    import {Fonts} from './services/webgpu/src/fonts.mjs';
+
+    await Fonts('Raleway', 'Raleway-Regular.ttf');
+    await Fonts('Raleway-ExtraBold', 'Raleway-ExtraBold.ttf');
+
+    function FetchException(message) {
+        perf.exception.push({
+            message: message,
+            name: 'FetchException'
+        });
+    }
+
+    const request = (url, data) => {
+        return new Promise((resolve, reject) => {
+                fetch(url, {
+                    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                    mode: 'cors', // no-cors, *cors, same-origin
+                    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                    credentials: 'same-origin', // include, *same-origin, omit
+                    headers: {
+                        'X-CSRF-TOKEN': getCookie(),
+                        'X-XSRF-TOKEN': getCookie(),
+                    },
+                    redirect: 'follow', // manual, *follow, error
+                    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    body: JSON.stringify(data), // body data type must match "Content-Type" header
+                }).then(async function(response) {
+                    if (response.status === 400) {
+                        throw new FetchException(await response.json());
+                    } else {
+                        resolve(response.json());
+                    }
+                }).catch(function(e) {
+                    reject(e);
+                });
+            resolve(true)
+        });
+    };
+
+    function getCookie(name) {
+        if (!document.cookie) {
+            return null;
+        }
+
+        let cookieToken = document.cookie.replace(
+            /(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/,
+            '$1',
+        );
+
+        if (cookieToken.length === 0) {
+            return null;
+        }
+        return decodeURIComponent(cookieToken);
+    }
+
+    let normalizeLocation = window.location.pathname
+    if (!normalizeLocation.endsWith('/')) {
+        normalizeLocation = normalizeLocation.split('/')
+        normalizeLocation.pop()
+        normalizeLocation = `${normalizeLocation.join('/')}/`
+    }
+
+    navigator.serviceWorker.register('./sw.mjs', {
+        type: 'module',
+        scope: normalizeLocation
+    }).then((registration) => {
+        console.log('Service worker registered successfully', registration);
+
+        registration.onupdatefound = function () {
+            var newSW = registration.installing;
+            newSW.onstatechange = function () {
+                if (newSW.state === 'waiting') {
+                    newSW.postMessage({
+                        type: 'skipWaiting'
+                    });
+                }
+            };
+        };
+
+        let isController = false
+
+        navigator.serviceWorker.addEventListener('message', (event) => {
+            if (!isController && event.data.type === 'SW_ACTIVATED') {
+                window.location.reload();
+            }
+        });
+
+        if (navigator.serviceWorker.controller) {
+            isController = true
+            registration.active.postMessage({
+                type: "get-client-id"
+            });
+        }
+    }).catch((err) => {
+        console.log('Service worker registration failed: ', err);
+    });
+
+</script>
+</body>
+</html>
