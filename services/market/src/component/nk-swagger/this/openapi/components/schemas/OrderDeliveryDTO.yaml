@@ -40,7 +40,7 @@ properties:
   dates:
     $ref: ./OrderDeliveryDatesDTO.yaml
   region:
-    $ref: ./RegionDTO.yaml
+#    $ref: ./RegionDTO.yaml
   address:
     $ref: ./OrderDeliveryAddressDTO.yaml
   vat:

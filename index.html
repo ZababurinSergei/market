@@ -64,26 +64,26 @@
 <script type="module">
     import index from './index.mjs'
 
-    window.YaAuthSuggest.init(
-        {
-            client_id: "32480cdd2cf24a6a8ec4c27da7294e62",
-            response_type: "token",
-            redirect_uri: "https://zababurinsergei.github.io/market/oauth2-redirect.html"
-        },
-        "https://zababurinsergei.github.io",
-        {
-            view: "button",
-            parentId: "buttonContainerId",
-            buttonSize: 'm',
-            buttonView: 'main',
-            buttonTheme: 'light',
-            buttonBorderRadius: "0",
-            buttonIcon: 'ya',
-        }
-    )
-        .then(({handler}) => handler())
-        .then(data => console.log('Сообщение с токеном', data))
-        .catch(error => console.log('Обработка ошибки', error))
+    // window.YaAuthSuggest.init(
+    //     {
+    //         client_id: "32480cdd2cf24a6a8ec4c27da7294e62",
+    //         response_type: "token",
+    //         redirect_uri: "https://zababurinsergei.github.io/market/oauth2-redirect.html"
+    //     },
+    //     "https://zababurinsergei.github.io",
+    //     {
+    //         view: "button",
+    //         parentId: "buttonContainerId",
+    //         buttonSize: 'm',
+    //         buttonView: 'main',
+    //         buttonTheme: 'light',
+    //         buttonBorderRadius: "0",
+    //         buttonIcon: 'ya',
+    //     }
+    // )
+    //     .then(({handler}) => handler())
+    //     .then(data => console.log('Сообщение с токеном', data))
+    //     .catch(error => console.log('Обработка ошибки', error))
 </script>
 </body>
 </html>
