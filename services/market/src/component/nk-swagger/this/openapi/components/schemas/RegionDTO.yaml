@@ -19,9 +19,9 @@ properties:
       Информация о родительском регионе.
 
       Указываются родительские регионы до уровня страны.
-    $ref: ./RegionDTO.yaml
+#    $ref: ./RegionDTO.yaml
   children:
     description: Дочерние регионы.
     type: array
     items:
-      $ref: ./RegionDTO.yaml
+#      $ref: ./RegionDTO.yaml
