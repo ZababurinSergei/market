@@ -54,8 +54,8 @@ paths:
     $ref: paths/campaigns_campaignId_orders_orderId_identifiers.yaml
   /campaigns/{campaignId}/orders/{orderId}/items:
     $ref: paths/campaigns_campaignId_orders_orderId_items.yaml
-#  /campaigns/{campaignId}/orders/{orderId}/status:
-#    $ref: paths/campaigns_campaignId_orders_orderId_status.yaml
+  /campaigns/{campaignId}/orders/{orderId}/status:
+    $ref: paths/campaigns_campaignId_orders_orderId_status.yaml
   /campaigns/{campaignId}/orders/status-update:
     $ref: paths/campaigns_campaignId_orders_status-update.yaml
   /campaigns/{campaignId}/orders/{orderId}/delivery/shipments/{shipmentId}/boxes:
