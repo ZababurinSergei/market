@@ -38,10 +38,10 @@ export default async (self, actions) => {
 
 
     (self.ui).initOAuth({
-        clientId: 'your-client-id',
+        clientId: 'client-id',
         clientSecret: 'your-client-secret-if-required',
         realm: 'your-realms',
-        appName: 'your-app-name',
+        appName: 'Home market',
         scopeSeparator: ' ',
         scopes: 'openid profile email phone address',
         additionalQueryStringParams: {},
