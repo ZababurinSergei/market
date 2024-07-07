@@ -145,6 +145,10 @@ export const modules = async (app) => {
         }
     }));
 
+    app.get(`/oauth2-yandex-redirect.html`, async (req, res) => {
+        res.status(200).sendFile(path.join(__dirname, '/oauth2-yandex-redirect.html'));
+    });
+
     app.get(`/*`, async (req, res) => {
         res.status(200).sendFile(path.join(__dirname, '/index.html'));
     });
