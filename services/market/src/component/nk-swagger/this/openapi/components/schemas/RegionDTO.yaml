@@ -13,13 +13,13 @@ properties:
     type: string
   type:
     description: Тип региона.
-    $ref: ./RegionType.yaml
+#    $ref: ./RegionType.yaml
   parent:
     description: |
       Информация о родительском регионе.
 
       Указываются родительские регионы до уровня страны.
-#    $ref: ./RegionDTO.yaml
+    $ref: ./RegionDTO.yaml
   children:
     description: Дочерние регионы.
     type: array
