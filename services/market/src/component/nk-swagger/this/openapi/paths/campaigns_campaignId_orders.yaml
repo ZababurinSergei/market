@@ -1,0 +1,98 @@
+get:
+  tags:
+    - orders
+    - fbs
+    - dbs
+    - express
+  operationId: getOrders
+  summary: Информация о заказах
+  description: >
+    Возвращает информацию о заказах. Запрос можно использовать, чтобы узнать,
+    нет ли новых заказов.
+
+
+    Доступна фильтрация по нескольким характеристикам заказов:
+
+
+    * дате оформления;
+
+
+    * статусу;
+
+
+    * идентификаторам заказов;
+
+
+    * этапу обработки или причине отмены;
+
+
+    * типу (настоящий или тестовый);
+
+
+    * дате отгрузки в службу доставки;
+
+
+    * дате и времени обновления заказа.
+
+
+    Информация о заказах, доставленных или отмененных больше 30 дней назад, не
+    возвращается. Ее можно получить с помощью запроса информации об отдельном
+    заказе [GET
+    campaigns/{campaignId}/orders/{orderId}](../../reference/orders/getOrder.md)
+    (если у вас есть идентификатор заказа) или запроса отчета по заказам [POST
+    campaigns/{campaignId}/stats/orders](../../reference/stats/getOrdersStats.md).
+
+
+    Максимальный диапазон дат за один запрос к ресурсу — 30 дней. Максимальное
+    количество заказов в выходных данных запроса — 50.
+
+
+    Результаты возвращаются постранично.
+
+
+    Получить более подробную информацию о покупателе и его номере телефона можно
+    с помощью запроса [GET
+    campaigns/{campaignId}/orders/{orderId}/buyer](../../reference/orders/getOrderBuyerInfo.md).
+
+
+    |**⚙️ Лимит:** 1 000 000 запросов в час|
+
+    |-|
+  parameters:
+    - $ref: ../components/parameters/CampaignId.yaml
+    - $ref: ../components/parameters/GetOrdersOrderIds.yaml
+    - $ref: ../components/parameters/GetOrdersStatus.yaml
+    - $ref: ../components/parameters/GetOrdersSubstatus.yaml
+    - $ref: ../components/parameters/GetOrdersFromDate.yaml
+    - $ref: ../components/parameters/GetOrdersToDate.yaml
+    - $ref: ../components/parameters/GetOrdersSupplierShipmentDateFrom.yaml
+    - $ref: ../components/parameters/GetOrdersSupplierShipmentDateTo.yaml
+    - $ref: ../components/parameters/GetOrdersUpdatedAtFrom.yaml
+    - $ref: ../components/parameters/GetOrdersUpdatedAtTo.yaml
+    - $ref: ../components/parameters/GetOrdersDispatchType.yaml
+    - $ref: ../components/parameters/GetOrdersFake.yaml
+    - $ref: ../components/parameters/GetOrdersHasCis.yaml
+    - $ref: ../components/parameters/GetOrdersOnlyWaitingForCancellationApprove.yaml
+    - $ref: ../components/parameters/GetOrdersOnlyEstimatedDelivery.yaml
+    - $ref: ../components/parameters/GetOrdersBuyerType.yaml
+    - $ref: ../components/parameters/PageNum.yaml
+    - $ref: ../components/parameters/PageSize.yaml
+  responses:
+    '200':
+      description: Информация о заказах.
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/GetOrdersResponse.yaml
+    '400':
+      $ref: ../components/responses/400.yaml
+    '401':
+      $ref: ../components/responses/401.yaml
+    '403':
+      $ref: ../components/responses/403.yaml
+    '404':
+      $ref: ../components/responses/404.yaml
+    '420':
+      $ref: ../components/responses/420.yaml
+    '500':
+      $ref: ../components/responses/500.yaml

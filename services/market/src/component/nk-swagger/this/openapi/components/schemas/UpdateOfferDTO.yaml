@@ -1,0 +1,47 @@
+description: Параметры товара.
+type: object
+allOf:
+  - $ref: ./BaseOfferDTO.yaml
+  - properties:
+      parameterValues:
+        description: >
+          Список характеристик с их значениями.
+
+
+          С `parameterValues` обязательно передавайте `marketCategoryId` —
+          идентификатор категории на Маркете, к которой относятся указанные
+          характеристики товара.
+
+
+          Всегда обновляется целиком.
+
+
+          Максимальное количество характеристик — 300.
+        type: array
+        maxItems: 300
+        items:
+          $ref: ./ParameterValueDTO.yaml
+      basicPrice:
+        description: |
+          Цена.
+        $ref: ./UpdatePriceWithDiscountDTO.yaml
+      purchasePrice:
+        description: >-
+          Себестоимость — затраты на самостоятельное производство товара или
+          закупку у производителя или поставщиков.
+        $ref: ./BasePriceDTO.yaml
+      additionalExpenses:
+        description: Дополнительные расходы на товар. Например, на доставку или упаковку.
+        $ref: ./BasePriceDTO.yaml
+      cofinancePrice:
+        description: >
+          Цена для скидок с Маркетом.
+
+
+          Маркет может компенсировать до половины скидки. Назначьте минимальную
+          цену до вычета тарифов, по которой готовы продавать товар, а мы
+          рассчитаем скидку и размер софинансирования.
+
+
+          Если Маркет не готов софинансировать скидку, покупатель ее не увидит.
+        $ref: ./BasePriceDTO.yaml

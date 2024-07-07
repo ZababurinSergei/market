@@ -1,0 +1,13 @@
+description: >
+  Идентификатор кабинета. Чтобы узнать идентификатор, воспользуйтесь запросом
+  [GET campaigns](../../reference/campaigns/getCampaigns.md#businessdto).
+
+
+  ℹ️ [Что такое кабинет и магазин на
+  Маркете](https://yandex.ru/support/marketplace/account/introduction.html)
+name: businessId
+in: path
+required: true
+schema:
+  type: integer
+  format: int64

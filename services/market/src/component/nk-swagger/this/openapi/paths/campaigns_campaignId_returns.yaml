@@ -1,0 +1,144 @@
+get:
+  tags:
+    - returns
+    - fbs
+    - dbs
+    - express
+  operationId: getReturns
+  summary: Список возвратов и невыкупов
+  description: >
+    Получает список возвратов и невыкупов.
+
+
+    Чтобы получить информацию по одному возврату или невыкупу, выполните запрос
+    [GET
+    campaigns/{campaignId}/orders/{orderId}/returns/{returnId}](../../reference/orders/getReturn.md).
+
+
+    |**⚙️ Лимит:** 10 000 запросов в час|
+
+    |-|
+  parameters:
+    - $ref: ../components/parameters/CampaignId.yaml
+    - $ref: ../components/parameters/PageToken.yaml
+    - $ref: ../components/parameters/PageLimit.yaml
+    - description: >
+        Идентификаторы заказов — для фильтрации результатов.
+
+
+        Несколько идентификаторов перечисляются через запятую без пробела.
+        Максимальное количество идентификаторов — 50.
+      in: query
+      name: orderIds
+      required: false
+      schema:
+        type: array
+        maxItems: 50
+        items:
+          type: integer
+          format: int64
+          example: 123543
+    - description: |
+        Статусы возвратов или невыкупов — для фильтрации результатов.
+
+        Несколько статусов перечисляются через запятую.
+      in: query
+      name: statuses
+      required: false
+      example: STARTED_BY_USER,WAITING_FOR_DECISION
+      schema:
+        type: array
+        items:
+          $ref: ../components/schemas/RefundStatusType.yaml
+    - description: |
+        Тип заказа для фильтрации:
+
+        * `RETURN` — возврат.
+
+        * `UNREDEEMED` — невыкуп.
+
+        Если не указывать, в ответе будут и возвраты, и невыкупы.
+      in: query
+      name: type
+      required: false
+      schema:
+        $ref: ../components/schemas/ReturnType.yaml
+    - description: >
+        Начальная дата для фильтрации возвратов или невыкупов по дате
+        обновления.
+
+
+        Формат: `ГГГГ-ММ-ДД`.
+      in: query
+      name: fromDate
+      required: false
+      example: '2022-10-31'
+      schema:
+        type: string
+        format: date
+    - description: |
+        Конечная дата для фильтрации возвратов или невыкупов по дате обновления.
+
+        Формат: `ГГГГ-ММ-ДД`.
+      in: query
+      name: toDate
+      required: false
+      example: '2022-11-30'
+      schema:
+        type: string
+        format: date
+    - description: >
+        {% note warning "" %}
+
+
+        Этот параметр устарел. Вместо него используйте `fromDate`.
+
+
+        {% endnote %}
+
+
+        Начальная дата для фильтрации возвратов или невыкупов по дате
+        обновления.
+      deprecated: true
+      in: query
+      name: from_date
+      required: false
+      example: '2022-10-31'
+      schema:
+        type: string
+        format: date
+    - description: |
+        {% note warning "" %}
+
+        Этот параметр устарел. Вместо него используйте `toDate`.
+
+        {% endnote %}
+
+        Конечная дата для фильтрации возвратов или невыкупов по дате обновления.
+      deprecated: true
+      in: query
+      name: to_date
+      required: false
+      example: '2022-11-30'
+      schema:
+        type: string
+        format: date
+  responses:
+    '200':
+      description: Постраничные возвраты партнера.
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/GetReturnsResponse.yaml
+    '400':
+      $ref: ../components/responses/400.yaml
+    '401':
+      $ref: ../components/responses/401.yaml
+    '403':
+      $ref: ../components/responses/403.yaml
+    '404':
+      $ref: ../components/responses/404.yaml
+    '420':
+      $ref: ../components/responses/420.yaml
+    '500':
+      $ref: ../components/responses/500.yaml

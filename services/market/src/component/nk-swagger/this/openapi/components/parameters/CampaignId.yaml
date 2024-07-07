@@ -1,0 +1,17 @@
+description: >
+  Идентификатор кампании в API и магазина в кабинете. Каждая кампания в API
+  соответствует магазину в кабинете.
+
+
+  Чтобы узнать идентификаторы своих магазинов, воспользуйтесь запросом [GET
+  campaigns](../../reference/campaigns/getCampaigns.md).
+
+
+  ℹ️ [Что такое кабинет и магазин на
+  Маркете](https://yandex.ru/support/marketplace/account/introduction.html)
+name: campaignId
+in: path
+required: true
+schema:
+  type: integer
+  format: int64

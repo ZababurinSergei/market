@@ -1,0 +1,135 @@
+get:
+  tags:
+    - prices
+    - fby
+    - fbs
+    - dbs
+    - express
+  operationId: getPrices
+  summary: Список цен
+  description: >
+    {% note warning "" %}
+
+
+    Этот метод устарел. Вместо него используйте [POST
+    campaigns/{campaignId}/offer-prices](../../reference/assortment/getPricesByOfferIds.md).
+
+
+    {% endnote %}
+
+
+    Возвращает список цен, установленных вами на товары любым способом:
+    например, через партнерский API или в файле с каталогом.
+
+
+    {% note info %}
+
+
+    Общее количество товаров считается по данным за последние семь дней (не
+    включая сегодня) и не может быть выше 2 миллионов.
+
+
+    {% endnote %}
+
+
+    Способы установки цен описаны [в Справке Маркета для
+    продавцов](https://yandex.ru/support/marketplace/assortment/operations/prices.html).
+
+
+    |**⚙️ Лимит:** ```(количество товаров партнера на витрине) * 25``` товаров в
+    сутки|
+
+    |-|
+  deprecated: true
+  parameters:
+    - $ref: ../components/parameters/CampaignId.yaml
+    - $ref: ../components/parameters/PageToken.yaml
+    - $ref: ../components/parameters/PageLimit.yaml
+    - description: Фильтр по нахождению в архиве.
+      in: query
+      name: archived
+      required: false
+      schema:
+        type: boolean
+        default: false
+  responses:
+    '200':
+      description: Список всех товаров с установленными ценами.
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/GetPricesResponse.yaml
+    '400':
+      $ref: ../components/responses/400.yaml
+    '401':
+      $ref: ../components/responses/401.yaml
+    '403':
+      $ref: ../components/responses/403.yaml
+    '404':
+      $ref: ../components/responses/404.yaml
+    '420':
+      $ref: ../components/responses/420.yaml
+    '500':
+      $ref: ../components/responses/500.yaml
+post:
+  tags:
+    - prices
+    - fby
+    - fbs
+    - dbs
+    - express
+  operationId: getPricesByOfferIds
+  summary: Просмотр цен на указанные товары в магазине
+  description: >
+    Возвращает список цен на указанные товары в магазине.
+
+
+    {% note warning "Метод только для отдельных магазинов" %}
+
+
+    Используйте этот метод, только если в кабинете установлены уникальные цены в
+    отдельных магазинах.
+
+
+    Для просмотра базовых цен используйте [POST
+    businesses/{businessId}/offer-mappings](../../reference/business-assortment/getOfferMappings.md).
+
+
+    {% endnote %}
+
+
+    |**⚙️ Лимит:** рассчитывается по [формуле](*rule)|
+
+    |-|
+
+
+    [//]: <> (rule: суточный лимит товаров — количество товаров на витрине * 25)
+  parameters:
+    - $ref: ../components/parameters/CampaignId.yaml
+    - $ref: ../components/parameters/PageToken.yaml
+    - $ref: ../components/parameters/PageLimit.yaml
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/GetPricesByOfferIdsRequest.yaml
+  responses:
+    '200':
+      description: Список товаров с установленными для заданного магазина ценами.
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/GetPricesByOfferIdsResponse.yaml
+    '400':
+      $ref: ../components/responses/400.yaml
+    '401':
+      $ref: ../components/responses/401.yaml
+    '403':
+      $ref: ../components/responses/403.yaml
+    '404':
+      $ref: ../components/responses/404.yaml
+    '420':
+      $ref: ../components/responses/420.yaml
+    '500':
+      $ref: ../components/responses/500.yaml

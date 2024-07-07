@@ -1,0 +1,16 @@
+description: |
+  Общее вознаграждение партнеру за DBS-доставку и все скидки на товар:
+
+  * по промокодам, купонам и акциям;
+  * по баллам Плюса;
+  * по доставке (DBS).
+
+  Передается в валюте заказа.
+type: object
+properties:
+  type:
+    $ref: ./OrderSubsidyType.yaml
+  amount:
+    description: Сумма субсидии.
+    type: number
+    format: decimal

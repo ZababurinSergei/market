@@ -1,0 +1,209 @@
+post:
+  tags:
+    - hidden-offers
+    - fby
+    - fbs
+    - dbs
+  operationId: addHiddenOffers
+  summary: Скрытие товаров и настройки скрытия
+  description: |
+    Скрывает товары магазина на Маркете.
+
+    {% note info "Данные в каталоге обновляются не мгновенно" %}
+
+    Это занимает до нескольких минут.
+
+    {% endnote %}
+
+    |**⚙️ Лимит:** 5000 товаров в минуту|
+    |-|
+  parameters:
+    - $ref: ../components/parameters/CampaignId.yaml
+  requestBody:
+    required: true
+    description: Запрос на скрытие оферов.
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/AddHiddenOffersRequest.yaml
+  responses:
+    '200':
+      description: Настройки скрытия получены и скоро вступят в силу.
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/EmptyApiResponse.yaml
+    '400':
+      $ref: ../components/responses/400.yaml
+    '401':
+      $ref: ../components/responses/401.yaml
+    '403':
+      $ref: ../components/responses/403.yaml
+    '420':
+      $ref: ../components/responses/420.yaml
+    '423':
+      $ref: ../components/responses/423.yaml
+    '500':
+      $ref: ../components/responses/500.yaml
+get:
+  tags:
+    - hidden-offers
+    - fby
+    - fbs
+    - dbs
+  operationId: getHiddenOffers
+  summary: Информация о скрытых вами товарах
+  description: >
+    Возвращает для заданного магазина список скрытых вами товаров.
+
+
+    В списке будут товары, скрытые любым способом — по API, с помощью YML-фида,
+    в кабинете и так далее.
+
+
+    |**⚙️ Лимит:** 5000 товаров в минуту, не более 500 товаров в одном запросе|
+
+    |-|
+  parameters:
+    - $ref: ../components/parameters/CampaignId.yaml
+    - $ref: ../components/parameters/params_OfferIds.yaml
+    - $ref: ../components/parameters/PageToken.yaml
+    - description: |
+        {% note warning "" %}
+
+        Этот параметр устарел. Не используйте его.
+
+        {% endnote %}
+
+        Количество скрытых товаров в выходных данных.
+
+        Минимальное значение: 1.
+
+        Максимальное значение: 500.
+
+        Значение по умолчанию: 500.
+
+        Используется вместе с параметром `page_token` или `offset`.
+
+        Если задан `limit`, параметры `page_number` и `page_size` игнорируются.
+      deprecated: true
+      $ref: ../components/parameters/PageLimit.yaml
+    - description: |
+        {% note warning "" %}
+
+        Этот параметр устарел. Не используйте его.
+
+        {% endnote %}
+
+        Позиция в списке, начиная с которой возвращаются результаты ответа.
+
+        Используется вместе с параметром `limit`.
+
+        Если задан `offset`, параметры `page_number` и `page_size` игнорируются.
+
+        `offset` игнорируется, если задан `page_token`.
+      deprecated: true
+      $ref: ../components/parameters/PageOffset.yaml
+    - description: >
+        {% note warning "" %}
+
+
+        Этот параметр устарел. Не используйте его.
+
+
+        {% endnote %}
+
+
+        Номер страницы результатов.
+
+
+        Значение по умолчанию: 1.
+
+
+        Используется вместе с параметром `page_size`.
+
+
+        `page_number` игнорируется, если задан `page_token`, `limit` или
+        `offset`.
+      deprecated: true
+      $ref: ../components/parameters/PageNum.yaml
+    - description: |
+        {% note warning "" %}
+
+        Этот параметр устарел. Не используйте его.
+
+        {% endnote %}
+
+        Размер страницы.
+
+        Используется вместе с параметром `page_number`.
+
+        `page_size` игнорируется, если задан `page_token`, `limit` или `offset`.
+      deprecated: true
+      $ref: ../components/parameters/PageSize.yaml
+  responses:
+    '200':
+      description: Информация о скрытых вами товарах.
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/GetHiddenOffersResponse.yaml
+    '400':
+      $ref: ../components/responses/400.yaml
+    '401':
+      $ref: ../components/responses/401.yaml
+    '403':
+      $ref: ../components/responses/403.yaml
+    '420':
+      $ref: ../components/responses/420.yaml
+    '500':
+      $ref: ../components/responses/500.yaml
+delete:
+  tags:
+    - hidden-offers
+    - fby
+    - fbs
+    - dbs
+  operationId: deleteHiddenOffers
+  summary: Возобновление показа товаров
+  description: |
+    Возобновляет показ скрытых вами товаров магазина на Маркете.
+
+    {% note info "Данные в каталоге обновляются не мгновенно" %}
+
+    Это занимает до нескольких минут.
+
+    {% endnote %}
+
+    |**⚙️ Лимит:** 5000 товаров в минуту|
+    |-|
+  parameters:
+    - $ref: ../components/parameters/CampaignId.yaml
+  requestBody:
+    required: true
+    description: Запрос на возобновление показа оферов.
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/DeleteHiddenOffersRequest.yaml
+  responses:
+    '200':
+      description: Показ товаров возобновлен.
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/EmptyApiResponse.yaml
+    '400':
+      $ref: ../components/responses/400.yaml
+    '401':
+      $ref: ../components/responses/401.yaml
+    '403':
+      $ref: ../components/responses/403.yaml
+    '404':
+      $ref: ../components/responses/404.yaml
+    '420':
+      $ref: ../components/responses/420.yaml
+    '423':
+      $ref: ../components/responses/423.yaml
+    '500':
+      $ref: ../components/responses/500.yaml

@@ -1,0 +1,128 @@
+description: Список товаров в заказе.
+type: object
+properties:
+  id:
+    description: |
+      Идентификатор товара в заказе.
+
+      Позволяет идентифицировать товар в рамках данного заказа.
+    type: integer
+    format: int64
+  offerId:
+    description: >-
+      Идентификатор вашего товарного предложения для определенного товара.
+      [Описание поля в Справке Маркета для
+      продавцов](https://yandex.ru/support/marketplace/assortment/fields/index.html#sku)
+    $ref: ./ShopSku.yaml
+  offerName:
+    description: Название товара.
+    type: string
+  price:
+    description: >
+      Цена на товар в валюте заказа без учета вознаграждения партнеру за скидки
+      по промокодам, купонам и акциям (параметр `subsidies`).
+    type: number
+    format: decimal
+  buyerPrice:
+    description: |
+      Цена на товар в валюте покупателя. В цене уже учтены скидки по:
+
+      * акциям;
+      * купонам;
+      * промокодам.
+    type: number
+    format: decimal
+  buyerPriceBeforeDiscount:
+    description: |
+      Цена продажи. Стоимость товара в валюте покупателя до применения скидок.
+    type: number
+    format: decimal
+  priceBeforeDiscount:
+    deprecated: true
+    description: |
+      {% note warning "" %}
+
+      Этот параметр устарел.
+
+      {% endnote %}
+
+      Стоимость товара в валюте магазина до применения скидок.
+    type: number
+    format: decimal
+  count:
+    description: Количество единиц товара.
+    type: integer
+  vat:
+    description: Ставка налога на добавленную стоимость (НДС) на товар.
+    $ref: ./OrderVatType.yaml
+  shopSku:
+    deprecated: true
+    description: "{% note warning \"\" %}\n\nЭтот параметр устарел. Вместо него используйте `offerId`.\n\n{% endnote %}\n\nВаш SKU —\_идентификатор товара в вашей системе.\n"
+    $ref: ./ShopSku.yaml
+  subsidy:
+    deprecated: true
+    description: |
+      {% note warning "" %}
+
+      Этот параметр устарел. Вместо него используйте `subsidies`.
+
+      {% endnote %}
+
+      Общее вознаграждение партнеру за DBS-доставку и все скидки на товар:
+
+      * по промокодам;
+      * по купонам;
+      * по баллам Плюса;
+      * по акциям.
+
+      Передается в валюте заказа.
+    type: number
+    format: decimal
+  partnerWarehouseId:
+    deprecated: true
+    description: |
+      {% note warning "" %}
+
+      Этот параметр устарел. Не используйте его.
+
+      {% endnote %}
+
+      Идентификатор склада в системе партнера, на который сформирован заказ.
+    type: string
+  promos:
+    description: >-
+      Информация о вознаграждениях партнеру за скидки на товар по промокодам,
+      купонам и акциям.
+    type: array
+    items:
+      $ref: ./OrderItemPromoDTO.yaml
+  instances:
+    description: >
+      Информация о маркировке единиц товара.
+
+
+      Возвращаются данные для маркировки, переданные в запросе [PUT
+      campaigns/{campaignId}/orders/{orderId}/cis](../../reference/orders/provideOrderItemCis.md).
+
+
+      Если магазин еще не передавал коды для этого заказа, `instances`
+      отсутствует.
+    type: array
+    items:
+      $ref: ./OrderItemInstanceDTO.yaml
+  details:
+    description: |
+      Информация об удалении товара из заказа.
+    type: array
+    items:
+      $ref: ./OrderItemDetailDTO.yaml
+  subsidies:
+    description: Список субсидий по типам.
+    type: array
+    items:
+      $ref: ./OrderItemSubsidyDTO.yaml
+  requiredInstanceTypes:
+    description: Список необходимых маркировок товара.
+    type: array
+    items:
+      $ref: ./OrderItemInstanceType.yaml

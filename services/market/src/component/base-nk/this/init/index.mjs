@@ -1,0 +1,117 @@
+import { store } from '../index.mjs';
+
+let pathname = undefined;
+const getChildren = (content) => {
+    let isShadowDom = false;
+    const container = {
+        shadowDom: [],
+        lightDom: []
+    };
+    for (let i = 0; i < content.children.length; ++i) {
+        isShadowDom = !content.children[i].tagName.includes('-');
+
+        if (content.children[i].dataset.exclusion !== undefined) {
+            isShadowDom = !isShadowDom;
+        }
+
+        if (isShadowDom) {
+            container.shadowDom.push(content.children[i]);
+        } else {
+            container.lightDom.push(content.children[i]);
+        }
+    }
+
+    return container;
+};
+
+export const init = (self) => {
+    return new Promise(async (resolve, reject) => {
+        let container = {
+            shadowDom: [],
+            lightDom: []
+        };
+
+        if (self.children[0] !== undefined && self.children[0].tagName === 'TEMPLATE' && self.children[1] === undefined) {
+            for (let i = 0; i < self.children.length; ++i) {
+                const content = self.children[i].content;
+                container = getChildren(content);
+                self.children[i].remove();
+            }
+        } else {
+            if (self.children[0] !== undefined && self.children[0].tagName === 'TEMPLATE' && self.children[1] !== undefined) {
+                alert(`Если используется  template вся разметка должна быть внутри`);
+            } else {
+                for (let i = 0; i < self.children.length; ++i) {
+                    let isShadowDom = !self.children[i].tagName.includes('-');
+
+                    if (self.children[i].dataset.exclusion !== undefined) {
+                        isShadowDom = !isShadowDom;
+                    }
+
+                    if (isShadowDom) {
+                        container.shadowDom.push(self.children[i]);
+                    }
+                }
+            }
+        }
+
+        let url = (new URL('./', import.meta.url)).pathname.split('/')
+
+        pathname = []
+        for(let i =0; i < url.length; ++i) {
+            if(url[i] === 'services') {
+                pathname.push(url[i])
+                pathname.push(url[i + 1])
+                pathname.push('src')
+                pathname = pathname.join('/')
+                break
+            }
+            pathname.push(url[i])
+
+        }
+
+        if (container.shadowDom.length > 0) {
+            let link = `${pathname}/component/${self.tagName.toLowerCase()}/this/css/index.shadow.css`;
+
+            if (!self.shadowRoot) {
+                self.attachShadow({ mode: 'open' });
+            }
+
+            if (self.dataset.cssShadow) {
+                link = `${pathname}/component/${self.tagName.toLowerCase()}/this/css/${self.dataset.cssShadow}.shadow.css`;
+            }
+
+            const style = document.createElement('style');
+            style.textContent = `@import "${link}";`;
+            self.shadowRoot.appendChild(style);
+            style.onload = () => {
+                for (let i = 0; i < container.shadowDom.length; ++i) {
+                    self.shadowRoot.append(container.shadowDom[i]);
+                }
+
+                if(container.lightDom.length > 0) {
+                    for (let i = 0; i < container.lightDom.length; ++i) {
+                        self.appendChild(container.lightDom[i])
+                    }
+                }
+
+                resolve(self);
+            };
+        } else {
+            resolve(self);
+        }
+
+        if(container.lightDom.length > 0 && container.shadowDom.length === 0) {
+            for (let i = 0; i < container.lightDom.length; ++i) {
+                self.appendChild(container.lightDom[i])
+            }
+            resolve(self);
+        }
+    });
+};
+
+export const template = init
+
+export default {
+    description: 'add style and template'
+};

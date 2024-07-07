@@ -1,0 +1,35 @@
+description: Ключ цифрового товара.
+type: object
+required:
+  - id
+  - code
+  - slip
+  - activate_till
+properties:
+  id:
+    description: >
+      Идентификатор товара в заказе.
+
+
+      Он приходит в ответе на запрос [GET
+      campaigns/{campaignId}/orders/{orderId}](../../reference/orders/getOrder.md)
+      и в запросе Маркета [POST
+      order/accept](../../pushapi/reference/orderAccept.md) — параметр `id` в
+      `items`.
+    type: integer
+    format: int64
+  code:
+    description: Сам ключ.
+    type: string
+  slip:
+    description: Инструкция по активации.
+    type: string
+  activate_till:
+    description: >
+      Дата, до которой нужно активировать ключ. Если ключ действует бессрочно,
+      укажите любую дату в отдаленном будущем.
+
+
+      Формат даты: `ГГГГ-ММ-ДД`.
+    type: string
+    format: date

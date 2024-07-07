@@ -1,0 +1,42 @@
+type: object
+properties:
+  offerIds:
+    description: "Идентификаторы товаров, информация о которых нужна.\n\n{% note warning \"Такой список возвращается только целиком\" %}\n\nЕсли вы запрашиваете информацию по конкретным SKU, не заполняйте:\n* `page_token`;\n* `limit`;\n* `cardStatuses`;\n* `categoryIds`;\n* `vendorNames`;\n* `tags`;\n* `archived`.\n\n{% endnote %}\n\n\_\n"
+    type: array
+    items:
+      $ref: ./ShopSku.yaml
+    maxItems: 200
+  cardStatuses:
+    description: >
+      Фильтр по статусам карточек.
+
+
+      [Что такое карточка
+      товара](https://yandex.ru/support/marketplace/assortment/content/index.html)
+    type: array
+    items:
+      $ref: ./OfferCardStatusType.yaml
+  categoryIds:
+    description: Фильтр по категориям на Маркете.
+    type: array
+    items:
+      type: integer
+  vendorNames:
+    description: Фильтр по брендам.
+    type: array
+    items:
+      type: string
+  tags:
+    description: Фильтр по тегам.
+    type: array
+    items:
+      type: string
+  archived:
+    description: >
+      Фильтр по нахождению в архиве.
+
+
+      Передайте `true`, чтобы получить товары, находящиеся в архиве. Если фильтр
+      не заполнен или передано `false`, в ответе возвращаются товары, не
+      находящиеся в архиве.
+    type: boolean

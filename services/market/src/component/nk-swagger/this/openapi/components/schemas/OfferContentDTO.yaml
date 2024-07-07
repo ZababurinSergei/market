@@ -1,0 +1,30 @@
+description: Товар с указанными характеристиками.
+type: object
+required:
+  - offerId
+  - categoryId
+  - parameterValues
+properties:
+  offerId:
+    $ref: ./ShopSku.yaml
+  categoryId:
+    $ref: ./CategoryId.yaml
+  parameterValues:
+    description: >
+      Список характеристик с их значениями.
+
+
+      С `parameterValues` обязательно передавайте `marketCategoryId` —
+      идентификатор категории на Маркете, к которой относятся указанные
+      характеристики товара.
+
+
+      Всегда обновляется целиком.
+
+
+      Максимальное количество характеристик — 300.
+    type: array
+    maxItems: 300
+    minItems: 1
+    items:
+      $ref: ./ParameterValueDTO.yaml

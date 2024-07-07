@@ -1,0 +1,30 @@
+description: Список товаров в возврате.
+type: object
+required:
+  - shopSku
+  - count
+properties:
+  marketSku:
+    description: SKU товара на Маркете.
+    $ref: ./MarketSku.yaml
+  shopSku:
+    $ref: ./ShopSku.yaml
+  count:
+    description: Количество единиц товара.
+    type: integer
+    format: int64
+  decisions:
+    description: Список решений по возврату.
+    type: array
+    items:
+      $ref: ./ReturnDecisionDTO.yaml
+  instances:
+    description: Список логистических позиций возврата.
+    type: array
+    items:
+      $ref: ./ReturnInstanceDTO.yaml
+  tracks:
+    description: Список трек-кодов для почтовых отправлений.
+    type: array
+    items:
+      $ref: ./TrackDTO.yaml

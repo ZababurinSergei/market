@@ -1,0 +1,24 @@
+description: >-
+  Элемент отображает одно грузовое место. Вложенные поля больше не используются,
+  передавайте элемент пустым в запросах и не обращайте внимание на содержимое в
+  ответах.
+type: object
+properties:
+  id:
+    description: |
+      {% note warning "" %}
+
+      Этот параметр устарел. Не используйте его.
+
+      {% endnote %}
+    type: integer
+    format: int64
+  fulfilmentId:
+    description: |
+      {% note warning "" %}
+
+      Этот параметр устарел. Не используйте его.
+
+      {% endnote %}
+    type: string
+    pattern: ^[\p{Alnum}- ]*$

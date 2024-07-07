@@ -16,6 +16,7 @@
     <meta property="og:image:width" content="537"/>
     <meta property="og:image:height" content="240"/>
     <link rel="manifest" href="./manifest.json" crossorigin="use-credentials">
+    <link rel="stylesheet" href="./services/market/src/this/css/index.light.css" />
     <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-with-polyfills-latest.js"></script>
     <title>DevOps</title>
     <link rel="shortcut icon"
@@ -24,8 +25,45 @@
 </head>
 
 <body>
-<div>test</div>
+<nk-swagger
+        id="nk-swagger_0"
+>
+    <template>
+        <div class="container">
+            <div class="swagger-menu">
+                <div class="slot-container">
+                    <slot name="mss-input"></slot>
+                </div>
+                <button class="swagger-save">Сохранить тесты</button>
+                <button class="swagger-reset">Сбросить блоки it</button>
+            </div>
+            <div class="slot-container">
+                <slot name="swagger-ui"></slot>
+            </div>
+        </div>
+        <div data-exclusion slot="swagger-ui" id="swagger-ui"></div>
+        <mss-input
+                id="mss-input_2"
+                disabled
+                slot="mss-input"
+        >
+            <template>
+                <div class="container">
+                    <input
+                            type="text"
+                            id="input"
+                            placeholder="Введите название describe блока"
+                            value=""
+                    />
+                </div>
+            </template>
+        </mss-input>
+    </template>
+</nk-swagger>
+
 <script type="module">
+    import index from './index.mjs'
+
     window.YaAuthSuggest.init(
         {
             client_id: "32480cdd2cf24a6a8ec4c27da7294e62",
