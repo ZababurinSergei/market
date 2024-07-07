@@ -65,6 +65,14 @@
 <script type="module">
     const init = async (auth) => {
         console.log('Сообщение с токеном', auth)
+        window.localStorage.setItem('authorization', JSON.stringify({
+            expires_in: auth.expires_in,
+            token_type: auth.token_type,
+            cid: auth.cid,
+            token: {
+                access: auth.access_token
+            }
+        }))
         await import('./index.mjs')
     }
 

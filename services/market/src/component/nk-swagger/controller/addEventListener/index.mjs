@@ -19,8 +19,6 @@ export default async (self, actions) => {
         docExpansion: 'none',
         validatorUrl: 'http://localhost:8080',
         requestInterceptor: (req) => {
-            console.log('---------------------------------------------', req)
-            debugger
             const authorization = store.get('authorization')
             if (authorization) {
                 req.headers.Authorization = `Bearer ${authorization.token.access}`
