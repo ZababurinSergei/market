@@ -139,7 +139,8 @@ export const modules = async (app) => {
     app.use(proxy('https://api.partner.market.yandex.ru', {
         limit: '5mb',
         filter: function (req) {
-            const data = ['/market'].some(path => req.path.startsWith(path));
+            console.log('--------------------', req.path)
+            const data = ['/campaigns'].some(path => req.path.startsWith(path));
             return data;
         }
     }));
