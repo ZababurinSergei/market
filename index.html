@@ -71,15 +71,7 @@
             redirect_uri: "https://zababurinsergei.github.io/market/oauth2-redirect.html"
         },
         "https://zababurinsergei.github.io",
-        {
-            view: "button",
-            parentId: "buttonContainerId",
-            buttonSize: 'm',
-            buttonView: 'main',
-            buttonTheme: 'light',
-            buttonBorderRadius: "0",
-            buttonIcon: 'ya',
-        }
+        { view: "default" }
     )
         .then(({handler}) => handler())
         .then(data => console.log('Сообщение с токеном', data))
