@@ -63,8 +63,10 @@
 </nk-swagger>
 
 <script type="module">
+    import {store} from './index.mjs'
+
+    const suth = store.get('authorization')
     const init = async (auth) => {
-        console.log('Сообщение с токеном', auth)
         window.localStorage.setItem('authorization', JSON.stringify({
             expires_in: auth.expires_in,
             token_type: auth.token_type,
@@ -73,21 +75,27 @@
                 access: auth.access_token
             }
         }))
+
+        const api = await import('./services/market/src/api/index.mjs')
+        console.log('api', api)
+        debugger
         await import('./index.mjs')
     }
 
-    window.YaAuthSuggest.init(
-        {
-            client_id: "88d4aef967d14177922e081aead43590",
-            response_type: "token",
-            redirect_uri: "https://zababurinsergei.github.io/market/oauth2-yandex-redirect.html"
-        },
-        "https://zababurinsergei.github.io",
-        { view: "default" }
-    )
+    if (!suth) {
+        window.YaAuthSuggest.init(
+            {
+                client_id: "88d4aef967d14177922e081aead43590",
+                response_type: "token",
+                redirect_uri: "https://zababurinsergei.github.io/market/oauth2-yandex-redirect.html"
+            },
+            "https://zababurinsergei.github.io",
+            {view: "default"}
+        )
         .then(({handler}) => handler())
         .then(data => init(data))
         .catch(error => console.log('Обработка ошибки', error))
+    }
 </script>
 </body>
 </html>
