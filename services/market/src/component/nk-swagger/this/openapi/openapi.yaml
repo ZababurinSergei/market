@@ -106,8 +106,8 @@ paths:
       paths/campaigns_campaignId_orders_orderId_returns_returnId_decision_itemId_image_imageHash.yaml
   /regions:
     $ref: paths/regions.yaml
-#  /regions/{regionId}:
-#    $ref: paths/regions_regionId.yaml
+  /regions/{regionId}:
+    $ref: paths/regions_regionId.yaml
   /regions/{regionId}/children:
     $ref: paths/regions_regionId_children.yaml
   /campaigns/{campaignId}/shipments/reception-transfer-act:
@@ -218,8 +218,8 @@ paths:
     $ref: paths/reports_documents_labels_generate.yaml
   /campaigns/{campaignId}/outlets:
     $ref: paths/campaigns_campaignId_outlets.yaml
-#  /campaigns/{campaignId}/outlets/{outletId}:
-#    $ref: paths/campaigns_campaignId_outlets_outletId.yaml
+  /campaigns/{campaignId}/outlets/{outletId}:
+    $ref: paths/campaigns_campaignId_outlets_outletId.yaml
   /campaigns/{campaignId}/outlets/licenses:
     $ref: paths/campaigns_campaignId_outlets_licenses.yaml
   /campaigns/{campaignId}/feedback/updates:
