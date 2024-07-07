@@ -1,0 +1,22 @@
+{
+  "name": "market",
+  "version": "0.1.0",
+  "description": "Market",
+  "main": "signal.mjs",
+  "scripts": {
+    "start": "node signal.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZababurinSergei/market.git"
+  },
+  "author": "Zababurin Sergey",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/ZababurinSergei/market/issues"
+  },
+  "homepage": "https://github.com/ZababurinSergei/market#readme",
+  "dependencies": {
+    "peer": "^1.0.2"
+  }
+}
