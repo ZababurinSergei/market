@@ -22,44 +22,8 @@ export const modules = async (app) => {
         }
     });
 
-// const aggregatorRegistry = new AggregatorRegistry();
-// register for prometheus aggregation
-// app.get('/metrics', async (_, res) => {
-//     const metrics = await getAggregateMetrics();
-//     res.set('Content-Type', aggregatorRegistry.contentType);
-//     res.send(metrics.metrics());
-// });
-// metrics for graphql requests
-// const apolloMetricsPlugin = createMetricsPlugin(register);
-// metrics for rest requests
-// app.use(
-//     promBundle({
-//         autoregister: false, // disable /metrics for single workers
-//         includeMethod: true,
-//         includeStatusCode: true,
-//         includePath: true,
-//         promRegistry: register,
-//     }),
-// );
-
     app.use(compression());
     app.use(express.json());
-
-    // JIRA_PROTOCOL=https
-    // JIRA_HOST=jira.digitalms.ru
-    // JIRA_USERNAME=s.zababurin
-    // JIRA_PASSWORD=KQW@I24N
-    // JIRA_API_VERSION=2
-    // JIRA_STRICT_SSL=true
-
-    const jira = new JiraApi({
-        protocol: 'https',
-        host: 'jira.digitalms.ru',
-        username: 's.zababurin',
-        password: 'KQW@I24N',
-        apiVersion: 2,
-        strictSSL: true
-    });
 
     const queue = new Enqueue({
         concurrentWorkers: 4,
@@ -172,61 +136,16 @@ export const modules = async (app) => {
 
     const dapp = env().DAPP
 
-    app.use(proxy('https://metamart-dev.helpms.ru', {
+    app.use(proxy('https://api.partner.market.yandex.ru', {
         limit: '5mb',
         filter: function (req) {
-            const data = ['/metamart-subscription-service/'].some(path => req.path.startsWith(path));
+            const data = ['/market'].some(path => req.path.startsWith(path));
             return data;
         }
     }));
 
-    app.use(proxy('http://svc-fer-dev.helpms.ru:3333', {
-        limit: '5mb',
-        filter: function (req) {
-            const data = ['/v1/'].some(path => req.path.startsWith(path));
-            return dapp === 'rules' ? data : false;
-        }
-    }));
-
-    app.use(proxy('https://mkb11-compose-dev.digitalms.ru', {
-        limit: '5mb',
-        filter: function(req) {
-            const data = ['/v1/'].some(path => req.path.includes(path))
-            return dapp === 'mkb' ? data : false;
-        }
-    }));
-
-    const project = await jira.getProject('MKB11');
-    const board = await jira.getBoard('357')
-    const sprints = await jira.getAllSprints('357',0,100, 'active')
-    const getConfiguration = await jira.getConfiguration('357')
-
-    // const BoardPropertiesKeys = await jira.getBoardPropertiesKeys('357')
-    // const issues = await jira.getUsersIssues('s.zababurin', true) //not
-    // const ProjectsFull = await jira.getProjectsFull('357')
-    // const User = await jira.getUser('s.zababurin')
-
-    console.log('---------- SPRINT --------------------', sprints)
-    // console.log('---------- getConfiguration --------------------', getConfiguration)
-
-    //https://jira-node.github.io/class/src/jira.js~JiraApi.html
-    //https://jira-node.github.io/file/src/jira.js.html#lineNumber22
-    app.get(`/project`, async (req, res) => {
-        try {
-            const project = await jira.getProject('MKB11');
-            // const issue = await jira.findIssue(10);
-            // console.log(`Status: ${issue.fields.status.name}`);
-            console.log('========= JIRA =========', project);
-            res.status(200).send(project);
-        } catch (err) {
-            console.error(err);
-            res.status(400).send(err);
-        }
-    });
-
     app.get(`/*`, async (req, res) => {
-        // console.log('index ----- index', __dirname)
-        res.status(200).sendFile(path.join(__dirname, '/docs/index.html'));
+        res.status(200).sendFile(path.join(__dirname, '/index.html'));
     });
 
     app.post(`/auth`, async (req, res) => {

@@ -24,7 +24,7 @@ info:
     name: BSD 3-Clause
     url: https://opensource.org/license/bsd-3-clause/
 servers:
-  - url: https://api.partner.market.yandex.ru
+  - url: /market
 security:
   - OAuth:
       - market:partner-api
