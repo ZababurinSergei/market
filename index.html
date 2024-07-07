@@ -62,19 +62,22 @@
 </nk-swagger>
 
 <script type="module">
-    import index from './index.mjs'
+    const init = async (auth) => {
+        console.log('Сообщение с токеном', auth)
+        await import('./index.mjs')
+    }
 
     window.YaAuthSuggest.init(
         {
-            client_id: "32480cdd2cf24a6a8ec4c27da7294e62",
+            client_id: "88d4aef967d14177922e081aead43590",
             response_type: "token",
-            redirect_uri: "https://zababurinsergei.github.io/market/oauth2-redirect.html"
+            redirect_uri: "https://zababurinsergei.github.io/market/oauth2-yandex-redirect.html"
         },
         "https://zababurinsergei.github.io",
         { view: "default" }
     )
         .then(({handler}) => handler())
-        .then(data => console.log('Сообщение с токеном', data))
+        .then(data => init(data))
         .catch(error => console.log('Обработка ошибки', error))
 </script>
 </body>
