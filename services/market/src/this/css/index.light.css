@@ -3,3 +3,7 @@
 @import url('./index.shadow.desktop.custom.css');
 @import url('./base.css');
 @import url('./swagger-ui.css');
+
+iframe {
+    position: relative!important;
+}
